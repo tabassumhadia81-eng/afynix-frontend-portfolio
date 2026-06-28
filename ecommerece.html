@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShopEase Store</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f4f4f4;
+}
+
+header{
+background:#2563eb;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+.products{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+padding:30px;
+}
+
+.card{
+background:white;
+width:280px;
+padding:20px;
+border-radius:12px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+text-align:center;
+}
+
+.card img{
+width:100%;
+height:180px;
+object-fit:cover;
+border-radius:10px;
+}
+
+.card h3{
+margin:15px 0;
+}
+
+.price{
+font-size:20px;
+font-weight:bold;
+color:green;
+margin-bottom:10px;
+}
+
+button{
+padding:10px 20px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1d4ed8;
+}
+
+.cart{
+background:white;
+margin:20px;
+padding:20px;
+border-radius:12px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.cart h2{
+margin-bottom:15px;
+}
+
+.cart-item{
+display:flex;
+justify-content:space-between;
+margin:10px 0;
+padding:10px;
+border-bottom:1px solid #ddd;
+}
+
+.remove-btn{
+background:red;
+padding:5px 10px;
+}
+
+.total{
+margin-top:15px;
+font-size:22px;
+font-weight:bold;
+}
+
+footer{
+background:#222;
+color:white;
+text-align:center;
+padding:15px;
+margin-top:20px;
+}
+
+@media(max-width:768px){
+
+.products{
+flex-direction:column;
+align-items:center;
+}
+
+.card{
+width:90%;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>ShopEase Store</h1>
+<p>Mini E-Commerce Web App</p>
+</header>
+
+<section class="products">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500">
+<h3>Sports Shoes</h3>
+<p class="price">$50</p>
+<button onclick="addToCart('Sports Shoes',50)">
+Add To Cart
+</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500">
+<h3>Smart Watch</h3>
+<p class="price">$80</p>
+<button onclick="addToCart('Smart Watch',80)">
+Add To Cart
+</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500">
+<h3>Smart Phone</h3>
+<p class="price">$300</p>
+<button onclick="addToCart('Smart Phone',300)">
+Add To Cart
+</button>
+</div>
+
+</section>
+
+<section class="cart">
+
+<h2>Shopping Cart</h2>
+
+<div id="cartItems"></div>
+
+<div class="total">
+Total: $<span id="total">0</span>
+</div>
+
+</section>
+
+<footer>
+<p>© 2026 ShopEase Store</p>
+</footer>
+
+<script>
+
+let cart = [];
+let total = 0;
+
+function addToCart(name,price){
+
+cart.push({
+name:name,
+price:price
+});
+
+total += price;
+
+displayCart();
+
+}
+
+function removeItem(index){
+
+total -= cart[index].price;
+
+cart.splice(index,1);
+
+displayCart();
+
+}
+
+function displayCart(){
+
+let cartItems =
+document.getElementById("cartItems");
+
+cartItems.innerHTML = "";
+
+cart.forEach((item,index)=>{
+
+cartItems.innerHTML += `
+
+<div class="cart-item">
+
+<span>
+${item.name} - $${item.price}
+</span>
+
+<button
+class="remove-btn"
+onclick="removeItem(${index})">
+Remove
+</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("total").innerHTML =
+total;
+
+}
+
+</script>
+
+</body>
+</html>
