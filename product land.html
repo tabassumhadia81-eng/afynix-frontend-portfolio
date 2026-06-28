@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Product Landing Page</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f4f4f4;
+}
+
+/* Navbar */
+
+nav{
+    background:#222;
+    color:white;
+    padding:15px 50px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+}
+
+nav ul li{
+    margin-left:20px;
+}
+
+nav ul li a{
+    color:white;
+    text-decoration:none;
+}
+
+/* Hero Section */
+
+.hero{
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    padding:60px 30px;
+    flex-wrap:wrap;
+}
+
+.text{
+    max-width:500px;
+}
+
+.text h1{
+    font-size:45px;
+    margin-bottom:20px;
+}
+
+.text p{
+    margin-bottom:20px;
+    font-size:18px;
+}
+
+.btn{
+    background:blue;
+    color:white;
+    padding:12px 25px;
+    text-decoration:none;
+    border-radius:5px;
+}
+
+.image img{
+    width:300px;
+    max-width:100%;
+}
+
+/* Features */
+
+.features{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+    padding:40px;
+}
+
+.card{
+    background:white;
+    width:250px;
+    padding:20px;
+    border-radius:10px;
+    text-align:center;
+    box-shadow:0 0 10px gray;
+}
+
+/* Footer */
+
+footer{
+    background:#222;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+    nav{
+        flex-direction:column;
+    }
+
+    nav ul{
+        margin-top:10px;
+    }
+
+    .hero{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .text h1{
+        font-size:35px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+    <h2>Smart Watch</h2>
+
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Features</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+</nav>
+
+<section class="hero">
+
+    <div class="text">
+        <h1>Smart Watch X</h1>
+
+        <p>
+            Stylish smartwatch with fitness tracking,
+            heart rate monitor and long battery life.
+        </p>
+
+        <a href="#" class="btn">Buy Now</a>
+    </div>
+
+    <div class="image">
+        <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=500">
+    </div>
+
+</section>
+
+<section class="features">
+
+    <div class="card">
+        <h3>Fitness Tracking</h3>
+        <p>Track your daily activities.</p>
+    </div>
+
+    <div class="card">
+        <h3>Heart Monitor</h3>
+        <p>Check your heart rate anytime.</p>
+    </div>
+
+    <div class="card">
+        <h3>7 Days Battery</h3>
+        <p>Enjoy long battery backup.</p>
+    </div>
+
+</section>
+
+<footer>
+    <p>© 2026 Smart Watch. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
