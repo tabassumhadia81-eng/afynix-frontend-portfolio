@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weather App</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#4facfe,#00f2fe);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.container{
+    background:white;
+    width:90%;
+    max-width:450px;
+    padding:30px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 0 20px rgba(0,0,0,0.2);
+}
+
+h1{
+    margin-bottom:20px;
+    color:#333;
+}
+
+.search-box{
+    display:flex;
+    gap:10px;
+}
+
+.search-box input{
+    flex:1;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    outline:none;
+}
+
+.search-box button{
+    padding:12px 20px;
+    border:none;
+    background:#007bff;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.search-box button:hover{
+    background:#0056b3;
+}
+
+.weather{
+    margin-top:25px;
+    display:none;
+}
+
+.weather h2{
+    margin-bottom:10px;
+}
+
+.weather p{
+    margin:8px 0;
+    font-size:18px;
+}
+
+.error{
+    color:red;
+    margin-top:15px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Weather App</h1>
+
+    <div class="search-box">
+        <input type="text" id="city" placeholder="Enter City Name">
+        <button onclick="getWeather()">Search</button>
+    </div>
+
+    <div class="error" id="error"></div>
+
+    <div class="weather" id="weather">
+
+        <h2 id="cityName"></h2>
+
+        <p><strong>Temperature:</strong> <span id="temp"></span> °C</p>
+
+        <p><strong>Weather:</strong> <span id="condition"></span></p>
+
+        <p><strong>Humidity:</strong> <span id="humidity"></span>%</p>
+
+        <p><strong>Wind Speed:</strong> <span id="wind"></span> m/s</p>
+
+    </div>
+
+</div>
+
+<script>
+
+const apiKey = "f433b685c5e7e014845471f6c39a2e2a";
+
+async function getWeather(){
+
+    const city = document.getElementById("city").value.trim();
+
+    const weatherBox = document.getElementById("weather");
+    const errorBox = document.getElementById("error");
+
+    if(city === ""){
+        errorBox.innerHTML = "Please enter a city name.";
+        weatherBox.style.display = "none";
+        return;
+    }
+
+    try{
+
+        const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+        );
+
+        const data = await response.json();
+
+        if(data.cod != 200){
+            errorBox.innerHTML = "City not found.";
+            weatherBox.style.display = "none";
+            return;
+        }
+
+        errorBox.innerHTML = "";
+
+        document.getElementById("cityName").innerHTML =
+        data.name + ", " + data.sys.country;
+
+        document.getElementById("temp").innerHTML =
+        data.main.temp;
+
+        document.getElementById("condition").innerHTML =
+        data.weather[0].main;
+
+        document.getElementById("humidity").innerHTML =
+        data.main.humidity;
+
+        document.getElementById("wind").innerHTML =
+        data.wind.speed;
+
+        weatherBox.style.display = "block";
+
+    }
+
+    catch(error){
+
+        errorBox.innerHTML =
+        "Unable to fetch weather data.";
+
+        weatherBox.style.display = "none";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
