@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz App</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#1e293b;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.quiz-box{
+    background:white;
+    width:90%;
+    max-width:700px;
+    padding:30px;
+    border-radius:15px;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+#progress{
+    margin-bottom:15px;
+    font-weight:bold;
+}
+
+#question{
+    font-size:22px;
+    margin-bottom:20px;
+}
+
+.btn{
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+    border:1px solid #ccc;
+    background:white;
+    cursor:pointer;
+    border-radius:8px;
+    text-align:left;
+}
+
+.btn:hover{
+    background:#e2e8f0;
+}
+
+#nextBtn{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    margin-top:15px;
+    cursor:pointer;
+    display:none;
+}
+
+#nextBtn:hover{
+    background:#1d4ed8;
+}
+
+#result{
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+}
+
+#restartBtn{
+    display:none;
+    background:green;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:20px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="quiz-box">
+
+<h1>Quiz App</h1>
+
+<div id="progress"></div>
+
+<div id="question"></div>
+
+<div id="answers"></div>
+
+<button id="nextBtn">Next Question</button>
+
+<div id="result"></div>
+
+<center>
+<button id="restartBtn">Restart Quiz</button>
+</center>
+
+</div>
+
+<script>
+
+const questions = [
+
+{
+question:"What does HTML stand for?",
+answers:["Hyper Text Markup Language","Home Tool Markup Language","Hyper Transfer Markup Language","None"],
+correct:0
+},
+
+{
+question:"Which language is used for styling?",
+answers:["HTML","CSS","SQL","Python"],
+correct:1
+},
+
+{
+question:"Which language makes websites interactive?",
+answers:["CSS","HTML","JavaScript","SQL"],
+correct:2
+},
+
+{
+question:"Which tag creates a paragraph?",
+answers:["<p>","<h1>","<img>","<div>"],
+correct:0
+},
+
+{
+question:"Which symbol is used for ID in CSS?",
+answers:[".","#","*","@"],
+correct:1
+},
+
+{
+question:"JavaScript is used for?",
+answers:["Database","Design","Interactivity","Network"],
+correct:2
+},
+
+{
+question:"Which company developed JavaScript?",
+answers:["Microsoft","Netscape","Google","Apple"],
+correct:1
+},
+
+{
+question:"Which HTML tag shows an image?",
+answers:["img","image","pic","src"],
+correct:0
+},
+
+{
+question:"CSS stands for?",
+answers:[
+"Cascading Style Sheets",
+"Creative Style Sheets",
+"Computer Style Sheets",
+"Colorful Style Sheets"
+],
+correct:0
+},
+
+{
+question:"Which property changes text color?",
+answers:["background","font","color","text"],
+correct:2
+},
+
+{
+question:"Which method selects an element by ID?",
+answers:[
+"getElementById",
+"queryClass",
+"selectID",
+"getTag"
+],
+correct:0
+},
+
+{
+question:"Which keyword declares a variable?",
+answers:["let","style","html","css"],
+correct:0
+},
+
+{
+question:"Which operator checks equality?",
+answers:["=","==","++","--"],
+correct:1
+},
+
+{
+question:"What is DOM?",
+answers:[
+"Document Object Model",
+"Data Object Method",
+"Digital Object Model",
+"None"
+],
+correct:0
+},
+
+{
+question:"Which tag creates a link?",
+answers:["a","link","href","url"],
+correct:0
+}
+
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+const questionEl = document.getElementById("question");
+const answersEl = document.getElementById("answers");
+const nextBtn = document.getElementById("nextBtn");
+const resultEl = document.getElementById("result");
+const progressEl = document.getElementById("progress");
+const restartBtn = document.getElementById("restartBtn");
+
+function loadQuestion(){
+
+let q = questions[currentQuestion];
+
+progressEl.innerHTML =
+"Question " + (currentQuestion+1) +
+" of " + questions.length;
+
+questionEl.innerHTML = q.question;
+
+answersEl.innerHTML = "";
+
+q.answers.forEach((answer,index)=>{
+
+let button = document.createElement("button");
+
+button.innerHTML = answer;
+
+button.classList.add("btn");
+
+button.onclick = () => selectAnswer(index);
+
+answersEl.appendChild(button);
+
+});
+
+}
+
+function selectAnswer(selected){
+
+let correct = questions[currentQuestion].correct;
+
+if(selected === correct){
+score++;
+}
+
+Array.from(answersEl.children).forEach(btn=>{
+btn.disabled = true;
+});
+
+nextBtn.style.display = "block";
+
+}
+
+nextBtn.addEventListener("click",()=>{
+
+currentQuestion++;
+
+if(currentQuestion < questions.length){
+
+loadQuestion();
+nextBtn.style.display = "none";
+
+}else{
+
+showResult();
+
+}
+
+});
+
+function showResult(){
+
+questionEl.style.display="none";
+answersEl.style.display="none";
+nextBtn.style.display="none";
+progressEl.style.display="none";
+
+resultEl.innerHTML =
+"Quiz Finished!<br><br>Your Score: "
++ score + " / " + questions.length;
+
+restartBtn.style.display="inline-block";
+
+}
+
+restartBtn.addEventListener("click",()=>{
+
+currentQuestion = 0;
+score = 0;
+
+questionEl.style.display="block";
+answersEl.style.display="block";
+progressEl.style.display="block";
+
+resultEl.innerHTML="";
+restartBtn.style.display="none";
+
+loadQuestion();
+
+});
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
